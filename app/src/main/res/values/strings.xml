@@ -1,3 +1,22 @@
 <resources>
+
     <string name="app_name">BusTicketingSystem</string>
+
+    <!-- String for on boarding screen -->
+
+    <!-- Titles -->
+    <string name="heading_one">Book Your Ticket</string>
+    <string name="heading_two">Find Available Buses</string>
+    <string name="heading_three">Quick And Easy Payment</string>
+
+    <!-- Description -->
+    <string name="desc_one">You can book your bus ticket after login our mobile application. We will generate QR code to valid your booking.</string>
+    <string name="desc_two">We provide almost all the time schedules and routes of all buses registered with us. You can just search it and find what are the available buses.</string>
+    <string name="desc_three">You can pay for your ticket through our mobile application. We will provide payment option also you can select any payment method.</string>
+
+    <!-- Buttons -->
+    <string name="skip_btn">Skip</string>
+    <string name="next_btn">Next</string>
+    <string name="let_get_started">Lets Get Started</string>
+
 </resources>
