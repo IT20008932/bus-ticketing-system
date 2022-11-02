@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -91,7 +89,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView rid_txt,start_loc_txt,end_loc_txt,created_date_txt,modified_date_txt;
+        TextView rid_txt,start_loc_txt,end_loc_txt;
         LinearLayout mainLayout;
         ImageButton imgbtn;
         ImageView imageView;

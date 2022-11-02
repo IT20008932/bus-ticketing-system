@@ -1,4 +1,4 @@
-package com.csse.busticketingsystem.routes;
+package com.csse.busticketingsystem.buses;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -14,24 +14,24 @@ import android.widget.EditText;
 
 import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
-import com.csse.busticketingsystem.buses.Buses;
 import com.csse.busticketingsystem.database.DBHelper;
+import com.csse.busticketingsystem.routes.Routes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-public class AddRoute extends AppCompatActivity {
-    EditText etstartloc,etendloc;
+public class AddBus extends AppCompatActivity {
+    EditText busno,desc;
     boolean isfieldsvalidated=false;  //check all field validations
     String setStatusMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_route);
+        setContentView(R.layout.activity_add_bus);
 
         Log.d("workflow","Add Route onCreate  method  Called");
-        etstartloc=findViewById(R.id.inp_startloc);
-        etendloc=findViewById(R.id.inp_endloc);
+        busno=findViewById(R.id.inp_busno);
+        desc=findViewById(R.id.inp_busdesc);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.routes);
@@ -41,9 +41,6 @@ public class AddRoute extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.buses:
-                        startActivity(new Intent(getApplicationContext()
-                                , Buses.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext()
@@ -51,9 +48,12 @@ public class AddRoute extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.routes:
+                        startActivity(new Intent(getApplicationContext()
+                                , Routes.class));
+                        overridePendingTransition(0,0);
                         return true;
                 }
-                Log.d("workflow","Add Route Bottom Navigation  method  Called");
+                Log.d("workflow","Add Bus Bottom Navigation method called");
                 return false;
             }
         });
@@ -61,26 +61,26 @@ public class AddRoute extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void addRoute(View view) {
-        Log.d("workflow","Add Route addRoute  method  Called");
+    public void addBus(View view) {
+        Log.d("workflow","Add Bus addBus method called");
         isfieldsvalidated = CheckAllFields();
 
         if (isfieldsvalidated) {
             DBHelper dbHelper = new DBHelper(this);
 
-            long val = dbHelper.addRoutes(etstartloc.getText().toString(),
-                    etendloc.getText().toString());
+            long val = dbHelper.addBuses(busno.getText().toString(),
+                    desc.getText().toString());
 
             if (val == -1) {
-                setStatusMsg = getString(R.string.msg_route_add_unsuccesfull);
+                setStatusMsg = getString(R.string.msg_bus_add_unsuccesfull);
             }
             else {
-                setStatusMsg = getString(R.string.msg_route_add_succesfull);
+                setStatusMsg = getString(R.string.msg_bus_add_succesfull);
             }
 
-            Intent intent = new Intent(this, Routes.class).putExtra("status", setStatusMsg);
+            Intent intent = new Intent(this, Buses.class).putExtra("status", setStatusMsg);
             startActivity(intent);
-            Log.i("BTN Click", "Add route Confirmation button clicked");
+            Log.i("BTN Click", "Add bus confirmation button clicked");
         }
     }
 
@@ -88,27 +88,27 @@ public class AddRoute extends AppCompatActivity {
 
         //if values are changed pls change in modify route as well
 
-        int maxchar=10;
+        int maxchar=100;
 
         Log.d("workflow","Add Route CheckAllFields  method  Called");
-        if (etstartloc.length() == 0) {
-            etstartloc.setError(getString(R.string.error_msg_mandatory));
+        if (busno.length() == 0) {
+            busno.setError(getString(R.string.error_msg_mandatory));
             return false;
         }
 
-        if (etendloc.length() == 0) {
-            etendloc.setError(getString(R.string.error_msg_mandatory));
+        if (desc.length() == 0) {
+            desc.setError(getString(R.string.error_msg_mandatory));
             return false;
         }
-        if (etstartloc.length() > maxchar) {
+        if (busno.length() > maxchar) {
 
-            etstartloc.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+            busno.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
 
             return false;
         }
 
-        if (etendloc.length() > maxchar) {
-            etendloc.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+        if (desc.length() > maxchar) {
+            desc.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
             return false;
         }
 

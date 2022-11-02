@@ -30,7 +30,7 @@
                 android:elevation="0dp"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:menu="@menu/top_app_bar"
-                app:navigationIcon="@drawable/ic_dstock_24"
+                app:navigationIcon="@drawable/ic_bts_24"
                 app:title="@string/app_name" />
 
         </com.google.android.material.appbar.AppBarLayout>

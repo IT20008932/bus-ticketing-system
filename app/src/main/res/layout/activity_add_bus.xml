@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".routes.AddRoute">
+    tools:context=".buses.AddBus">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar2"
@@ -22,7 +22,7 @@
         app:layout_scrollFlags="scroll|enterAlways|snap"
         app:menu="@menu/top_app_bar"
         app:navigationIcon="@drawable/ic_bts_24"
-        app:title="@string/header_create_route" />
+        app:title="@string/header_add_bus" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_Start_location_add_route"
+                android:id="@+id/txt_bus_id_add_bus"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,12 +58,12 @@
                 app:endIconMode="clear_text"
                 app:helperTextEnabled="true"
                 app:hintTextColor="@color/design_default_color_secondary_variant"
-                android:hint="@string/label_start_location"
-                app:helperText="@string/helptxt_start_location"
+                android:hint="@string/label_bus_no"
+                app:helperText="@string/helptxt_bus_no"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inp_startloc"
+                    android:id="@+id/inp_busno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoText="false"
@@ -79,7 +79,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_end_location_add_route"
+                android:id="@+id/txt_bus_desc_add_bus"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -90,11 +90,11 @@
                 app:endIconMode="clear_text"
                 app:helperTextEnabled="true"
                 app:hintTextColor="@color/design_default_color_secondary_variant"
-                android:hint="@string/label_end_location"
-                app:helperText="@string/helptxt_end_location">
+                android:hint="@string/label_bus_desc"
+                app:helperText="@string/helptxt_bus_desc">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inp_endloc"
+                    android:id="@+id/inp_busdesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoText="false"
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="addRoute"
+                android:onClick="addBus"
                 android:text="@string/btn_add" />
 
         </LinearLayout>

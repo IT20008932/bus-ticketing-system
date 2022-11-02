@@ -40,10 +40,22 @@ public class DBHelper extends SQLiteOpenHelper {
                         + RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION +
                         " TEXT" + ")";
 
+        String SQL_CREATE_BUSES_TABLE =
+                "CREATE TABLE "
+                        + BusMaster.BusesT.TABLE_NAME +
+                        " ("
+                        + BusMaster.BusesT.COLUMN_NAME_BUS_ID +
+                        " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + BusMaster.BusesT.COLUMN_NAME_BUS_NUMBER +
+                        " TEXT, "
+                        + BusMaster.BusesT.COLUMN_NAME_DESCRIPTION +
+                        " TEXT" + ")";
 
         //defining the sql query
-        db.execSQL(SQL_CREATE_ROUTES_TABLE);//Execute the table creation
+        db.execSQL(SQL_CREATE_ROUTES_TABLE);//Execute the route table creation
         Log.d("workflow", "Routes table created successfully");
+        db.execSQL(SQL_CREATE_BUSES_TABLE);//Execute the bus table creation
+        Log.d("workflow", "Buses table created successfully");
 
     }
 
@@ -52,30 +64,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("workflow", "DB Onupgrade method Called");
         db.execSQL("DROP TABLE IF EXISTS " + RouteMaster.RoutesT.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + BusMaster.BusesT.TABLE_NAME);
 
         //  Create tables again
         onCreate(db);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public String getTimeStamp() {
-        Log.d("workflow", "DB gettimestamop method Called");
-
-        LocalDateTime myDateobj = LocalDateTime.now();
-        DateTimeFormatter myformatobj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-        String timeStamp = myDateobj.format(myformatobj);
-        return timeStamp;
-    }
+    // Route CRUD methods
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public long addRoutes(String startloc, String endloc) //enter all the parameter to be added to DB
     {
         Log.d("workflow", "DB addRoutes method Called");
-
-        String timeadd = getTimeStamp();
-        Log.d("workflow", "DB gettimpstamp method Called");
-
         SQLiteDatabase db = getWritableDatabase();// get the data repository in writable mode
 
         ContentValues values = new ContentValues();  //create a new map of values , where column names the key
@@ -188,6 +188,109 @@ public class DBHelper extends SQLiteOpenHelper {
                 + RouteMaster.RoutesT.COLUMN_NAME_START_LOCATION + ", "
                 + RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION + " From "
                 + RouteMaster.RoutesT.TABLE_NAME;
+
+        Log.d("workflow", query);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+
+        }
+        return cursor;
+    }
+
+    // Bus CRUD methods
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public long addBuses(String busno, String desc) //enter all the parameter to be added to DB
+    {
+        Log.d("workflow", "DB addRoutes method Called");
+        SQLiteDatabase db = getWritableDatabase();// get the data repository in writable mode
+
+        ContentValues values = new ContentValues();  //create a new map of values , where column names the key
+        values.put(BusMaster.BusesT.COLUMN_NAME_BUS_NUMBER, busno);
+        values.put(BusMaster.BusesT.COLUMN_NAME_DESCRIPTION, desc);
+
+        long newRowID = db.insert(BusMaster.BusesT.TABLE_NAME, null, values); //Insert a new row and returning the primary
+        //key values of the new row
+
+        Log.d("workflow", "DB addBuses method call finished");
+
+        return newRowID;
+    }
+
+    public List<String> getBuslist() {
+        List<String> list = new ArrayList<String>();
+
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + BusMaster.BusesT.TABLE_NAME
+                + " ORDER BY " +
+                BusMaster.BusesT.COLUMN_NAME_BUS_ID;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                list.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        // closing connection
+        cursor.close();
+        db.close();
+        // returning lables
+        return list;
+    }
+
+
+    public int deleteBus(String busid) {
+        Log.d("workflow", "DB delete bus method Called");
+
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = BusMaster.BusesT.COLUMN_NAME_BUS_ID + " = ? ";
+        String[] selectionArgs = {busid};
+
+
+        int status = db.delete(BusMaster.BusesT.TABLE_NAME,   //table name
+                selection,                         //where clause
+                selectionArgs                      //selection clause
+        );
+        return status;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int updateBus(String busid, String busno, String desc) { //define the attributes and parameters to be sent
+
+        Log.d("workflow", "DB update route method Called");
+        //  update route set is_default=0 where is_default=1
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(BusMaster.BusesT.COLUMN_NAME_BUS_ID, busid);
+        values.put(BusMaster.BusesT.COLUMN_NAME_BUS_NUMBER, busno);
+        values.put(BusMaster.BusesT.COLUMN_NAME_DESCRIPTION, desc);
+
+        String selection = BusMaster.BusesT.COLUMN_NAME_BUS_ID + " = ? ";
+        String[] selectionArgs = {busid};
+
+        int count = db.update(BusMaster.BusesT.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        return count;
+    }
+
+    public Cursor readAllBuses() {
+        Log.d("workflow", "DB read All Routes method Called");
+
+
+        String query = "SELECT " + "*" + " From "
+                + BusMaster.BusesT.TABLE_NAME;
 
         Log.d("workflow", query);
 

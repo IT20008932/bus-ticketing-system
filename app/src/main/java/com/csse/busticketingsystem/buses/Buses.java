@@ -1,4 +1,4 @@
-package com.csse.busticketingsystem.routes;
+package com.csse.busticketingsystem.buses;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +20,10 @@ import android.widget.TextView;
 
 import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
-import com.csse.busticketingsystem.adapters.RouteAdapter;
-import com.csse.busticketingsystem.buses.Buses;
+import com.csse.busticketingsystem.adapters.BusAdapter;
 import com.csse.busticketingsystem.database.DBHelper;
 
+import com.csse.busticketingsystem.routes.Routes;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class Routes extends AppCompatActivity {
+public class Buses extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton fab;
@@ -40,8 +40,8 @@ public class Routes extends AppCompatActivity {
     Bundle bundle;
 
     DBHelper db;
-    ArrayList<String> route_id,route_start_location,route_end_location;
-    RouteAdapter routeAdapter;
+    ArrayList<String> bus_id,bus_number,desc;
+    BusAdapter busAdapter;
     MaterialToolbar materialToolbar;
 
 
@@ -50,52 +50,48 @@ public class Routes extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_routes);
+        setContentView(R.layout.activity_buses);
 
         try {
             bundle = getIntent().getExtras();
             String getstatus = bundle.getString("status");
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.routesLayout), getstatus, Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.busesLayout), getstatus, Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.btn_ok, v -> snackbar.dismiss());
             snackbar.show();
         } catch (Exception ignore) { }
 
-        Log.d("workflow","Routes on_create method Called");
+        Log.d("workflow","Buses on_create method Called");
 
         recyclerView=findViewById(R.id.recyclerView3);
         empty_imageview=findViewById(R.id.empty_image);
         no_data = findViewById(R.id.no_data);
 
         db =new DBHelper(this);
-        route_id = new ArrayList<>();
+        bus_id = new ArrayList<>();
 
-        route_start_location = new ArrayList<>();
-        route_end_location = new ArrayList<>();
+        bus_id = new ArrayList<>();
+        desc = new ArrayList<>();
 
         storeDataInArrays();
-        Log.d("workflow","Routes storeDataInArrays method Called");
+        Log.d("workflow","Buses storeDataInArrays method called");
 
-        routeAdapter = new RouteAdapter(this,this,route_id,
-                route_start_location,
-                route_end_location);
+        busAdapter = new BusAdapter(this,this,bus_id, bus_number,
+                desc);
 
-        recyclerView.setAdapter(routeAdapter);
+        recyclerView.setAdapter(busAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         materialToolbar = findViewById(R.id.topAppBar);
         //setSupportActionBar(materialToolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.routes);
+        bottomNavigationView.setSelectedItemId(R.id.buses);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.buses:
-                        startActivity(new Intent(getApplicationContext()
-                                , Buses.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext()
@@ -103,25 +99,28 @@ public class Routes extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.routes:
+                        startActivity(new Intent(getApplicationContext()
+                                , Routes.class));
+                        overridePendingTransition(0,0);
                         return true;
                 }
-                Log.d("workflow","Routes bottom navigation method called");
+                Log.d("workflow","Buses bottom navigation method Called");
                 return false;
             }
         });
 
 
-        //start code for Add new route button
+        //start code for Add new bus button
         //pls replace below code after float button in UI
 
-        fab = findViewById(R.id.btn_add_route);
+        fab = findViewById(R.id.btn_add_bus);
 
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                openAddNewRoute();
-                Log.d("workflow","Routes Float Button Clicked");
+                openAddNewBus();
+                Log.d("workflow","Buses Float Button Clicked");
             }
         });
 
@@ -143,13 +142,13 @@ public class Routes extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode ==1){
             recreate();    //refresh if data not fetched
-            Log.d("workflow","Routes onActivityResult method Called");
+            Log.d("workflow","Buses onActivityResult method Called");
         }
     }
 
     private void storeDataInArrays() {
-        Log.d("workflow","Routes storeDataInArrays method Called");
-        Cursor cursor=db.readAllRoutes();
+        Log.d("workflow","Buses storeDataInArrays method Called");
+        Cursor cursor=db.readAllBuses();
         if(cursor.getCount()==0){
             empty_imageview.setVisibility(View.VISIBLE);
             no_data.setVisibility(View.VISIBLE);
@@ -158,9 +157,8 @@ public class Routes extends AppCompatActivity {
         {
             Resources resources=getResources();
             while(cursor.moveToNext()){
-                route_id.add(cursor.getString(0));
-                route_start_location.add(cursor.getString(1).substring(0, 1).toUpperCase() + cursor.getString(1).substring(1));
-                route_end_location.add(cursor.getString(2).substring(0, 1).toUpperCase() + cursor.getString(2).substring(1));
+                bus_id.add(cursor.getString(0));
+                desc.add(cursor.getString(2).substring(0, 1).toUpperCase() + cursor.getString(2).substring(1));
                 Log.d("workflow",cursor.getString(2));
             }
             empty_imageview.setVisibility(View.GONE);
@@ -169,24 +167,24 @@ public class Routes extends AppCompatActivity {
     }
 
 
-    //Add new route
+    //Add new bus
 
-    public void openAddNewRoute() {
-        Log.d("workflow","Routes openAddNewRoute method Called");
-        Intent intent = new Intent(this, AddRoute.class);
+    public void openAddNewBus() {
+        Log.d("workflow","Buses openAddNewBus method Called");
+        Intent intent = new Intent(this, AddBus.class);
         startActivity(intent);
-        Log.i("Lifecycle", "Add route button clicked");
+        Log.i("Lifecycle", "Add bus button clicked");
     }
 
 
-    //View route
+    //View bus
 
-    public void openViewRoute()
+    public void openViewBus()
     {
-        Log.d("workflow","Routes openViewRoute method Called");
-        Intent intent = new Intent(this,ModifyRoute.class);
+        Log.d("workflow","Buses openViewBus method Called");
+        Intent intent = new Intent(this,ModifyBus.class);
         startActivity(intent);
-        Log.i("workflow","Add route button clicked");
+        Log.i("workflow","Add bus button clicked");
     }
 
 }
