@@ -1,7 +1,55 @@
 <resources>
+    <!-- App Name -->
+    <string name="app_name" translatable="false">TicketingSystem</string>
 
-    <string name="app_name">Bus Ticket Booking</string>
+    <!-- Global Buttons -->
+    <string name="btn_add">ADD</string>
+    <string name="btn_update">UPDATE</string>
+    <string name="btn_delete">DELETE</string>
+    <string name="btn_cancel">CANCEL</string>
+    <string name="btn_create">Create</string>
+    <string name="btn_save">SAVE</string>
+    <string name="btn_ok">OKAY</string>
+    <string name="btn_yes">yes</string>
+    <string name="btn_no">no</string>
+    <string name="btn_view">VIEW</string>
+    <string name="btn_proceed">PROCEED</string>
+    <string name="btn_edit">EDIT</string>
+    <string name="btn_skip">SKIP NOW</string>
+    <string name="btn_next">NEXT</string>
+    <string name="btn_get_started">GET STARTED</string>
+    <!-- END Global Buttons -->
 
+    <!-- Global Labels -->
+    <string name="label_create_date">CREATED DATE</string>
+    <string name="label_modified_date">MODIFIED DATE</string>
+    <string name="label_route">ROUTE</string>
+    <string name="label_customer">CUSTOMERS</string>
+    <string name="label_settings">SETTINGS</string>
+    <!-- END Global Labels -->
+
+    <!-- Global Messages -->
+    <string name="msg_are_u_sure">Are You Sure?</string>
+    <string name="msg_confirm_delete">"Do you really want to delete this "</string>
+    <string name="msg_confirm_delete_canot_be_undone">This Process cannot be undone.</string>
+    <!-- END Global Messages -->
+
+    <!-- Global Errors -->
+    <string name="error_msg_mandatory">This field is required</string>
+    <!-- END Global Messages -->
+
+    <!-- Bottom Menu -->
+
+    <string name="bottom_passenger">PASSENGERS</string>
+    <string name="bottom_home">HOME</string>
+    <string name="bottom_bus">BUSES</string>
+    <string name="bottom_routes">ROUTES</string>
+	  <string name="bottom_schedule">SCHEDULES</string>
+
+    <!-- END Bottom Menu -->
+
+    <!-- END Global Actions -->
+    
     <!-- String for on boarding screen -->
 
     <!-- Titles -->
@@ -22,4 +70,117 @@
     <!-- String for login screen -->
     <string name="welcome_back">Welcome Back</string>
 
+
+    <!-- View Route -->
+    <!-- View Route Buttons -->
+    <!-- END View Route Buttons -->
+    <!-- View Route Labels -->
+    <string name="label_search">Search Route</string>
+    <string name="label_no_data">No Routes to show. Press + button to add a new Route.</string>
+    <string name="no_top_route">No Routes to show.</string>
+    <!-- END View Route Buttons -->
+    <!-- View Route Messages -->
+    <!-- END View Route Messages -->
+    <!-- END View Route -->
+
+
+    <string name="label_start_location">Start Location *</string>
+    <string name="label_end_location">End Location *</string>
+    <string name="helptxt_start_location">Enter Route Start Location</string>
+    <string name="helptxt_end_location">Enter Route End Location</string>
+    <string name="msg_route_add_succesfull">Route added successfully.</string>
+    <string name="msg_route_add_unsuccesfull">Route addition unsuccessful.</string>
+    <string name="error_msg_max_characters">Maximum Characters can be entered is</string>
+    <string name="error_msg_max_distance">Maximum distance can be entered is</string>
+
+    <!-- Manage Route -->
+    <string name="label_route_id">ROUTE ID</string>
+    <string name="label_to">To</string>
+    <string name="msg_route_update_succesfull">Route update successfully.</string>
+    <string name="msg_route_update_unsuccesfull">Route update unsuccessful.</string>
+    <string name="msg_oops"> OOPS </string>
+    <string name="msg_unable_delete">Unable to Delete at this moment</string>
+
+    <!--Confirm Delete Route -->
+    <string name="msg_route_delete_succesfull">Route delete successfully.</string>
+    <string name="msg_route_delete_unsuccesfull">Route deletion unsuccessful.</string>
+
+    <!-- Title Bar-->
+	<string name="setting">Settings</string>
+    <string name="header_route">MY ROUTES</string>
+    <string name="header_manage_route">MANAGE ROUTE</string>
+    <string name="header_create_route">CREATE ROUTE</string>
+    <string name="header_item">SCHEDULES</string>
+    <string name="header_update_item">UPDATE SCHEDULE</string>
+    <string name="header_add_customer">ADD SCHEDULE</string>
+
+    <!-- Buses -->
+    <string name="add_bus">Create Bus</string>
+    <string name="no_buses">No buses to show. Press + button to add a new bus.</string>
+    <string name="enter_bid">Enter Bus ID</string>
+    <string name="enter_bdesc">Enter Bus Description</string>
+
+    <!-- Schedules -->
+    <string name="cus_label">Customer</string>
+    <string name="date_label">Date</string>
+    <string name="prod_label">Products</string>
+    <string name="cus_name_ph">Customer Name</string>
+    <string name="date_format">DD/MM/YYYY</string>
+    <string name="search_id_des">Search by ID or Description</string>
+    <string name="id">ID</string>
+    <string name="des">Description</string>
+    <string name="unit_price">Unit Price</string>
+    <string name="amount">Amount</string>
+    <string name="total">Total</string>
+    <string name="discount">Discount</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="qty">Qty</string>
+    <string name="urgent">Mark as urgent</string>
+    <string name="create_so">Create Sales Order</string>
+    <string name="manage_so">Manage Sales Order</string>
+    <string name="update_so">Update Sales Order</string>
+    <string name="delete_so">Delete Sales Order</string>
+    <string name="view_so">View Sales Orders</string>
+    <string name="sales_orders">Sales Orders</string>
+    <string name="sales_summary">Sales Summary</string>
+    <string name="update_payment">Update Payment</string>
+    <string name="due_payments">View Due Payments</string>
+    <string name="view_sales_summary">View Sales Summary</string>
+    <string name="monthly_sales">Monthly Sales</string>
+    <string name="monthly_profit">Monthly Profit</string>
+    <string name="items">Items</string>
+    <string name="customers">Customers</string>
+    <string name="routes">Routes</string>
+    <string name="sales">Sales</string>
+    <string name="home">Home</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="discard">Discard</string>
+    <string name="print">Print</string>
+    <string name="inv_no">Invoice No. *</string>
+    <string name="pay_due">Payment Due</string>
+    <string name="pay_amt">Payment Amount *</string>
+    <string name="pay_date">Payment Date *</string>
+    <string name="bal_due">Balance Due</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="status">Status</string>
+    <string name="tot_sales">Total Sales</string>
+    <string name="tot_cus">No. of Customers</string>
+    <string name="tot_sold">No. of Items Sold</string>
+    <string name="received_payment">Payment Received</string>
+    <string name="avg_sales">Average Daily Sales</string>
+    <string name="tot_sales_val" translatable="false">0.00</string>
+    <string name="tot_cus_val" translatable="false">0</string>
+    <string name="tot_sold_val" translatable="false">0</string>
+    <string name="received_payment_val" translatable="false">0.00</string>
+    <string name="payment_due_val" translatable="false">0.00</string>
+    <string name="avg_sales_val" translatable="false">0.00</string>
+    <string name="monthly_sales_val" translatable="false">0.00</string>
+    <string name="monthly_profit_val" translatable="false">0.00</string>
+    <string name="del_date">Delivery Date</string>
+    <string name="label_no_so">No sales orders to show. Press + button to add a new sales order.</string>
+    <string name="channel_name">Notification Channel</string>
+    <string name="channel_description">Channel Descrption</string>
 </resources>

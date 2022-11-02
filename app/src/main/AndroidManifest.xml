@@ -13,6 +13,13 @@
         android:theme="@style/Theme.BusTicketingSystem"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".RegisterScreen"
             android:exported="false">
             <meta-data
@@ -46,13 +53,53 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        
         <activity
-            android:name=".MainActivity"
-            android:exported="false">
+            android:name=".routes.Routes"
+            android:exported="false"
+            android:label="ROUTES">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".routes.AddRoute"
+            android:exported="true" />
+        <activity
+            android:name=".routes.ModifyRoute"
+            android:exported="true" />
+
+        <activity
+            android:name=".schedules.Schedules"
+            android:exported="false"
+            android:label="SCHEDULES">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".schedules.AddSchedule"
+            android:exported="true" />
+        <activity
+            android:name=".schedules.ModifySchedule"
+            android:exported="true" />
+
+        <activity
+            android:name=".buses.Buses"
+            android:exported="false"
+            android:label="BUSES">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".buses.AddBus"
+            android:exported="true" />
+        <activity
+            android:name=".buses.ModifyBus"
+            android:exported="true" />
+        
     </application>
+
 
 </manifest>
