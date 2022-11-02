@@ -19,6 +19,7 @@ import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
 import com.csse.busticketingsystem.database.DBHelper;
 import com.csse.busticketingsystem.routes.Routes;
+import com.csse.busticketingsystem.schedules.Schedules;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -58,6 +59,11 @@ public class ModifyBus extends AppCompatActivity {
                     case R.id.routes:
                         startActivity(new Intent(getApplicationContext()
                                 , Routes.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.schedules:
+                        startActivity(new Intent(getApplicationContext()
+                                , Schedules.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -197,14 +203,14 @@ public class ModifyBus extends AppCompatActivity {
                         DBHelper dbHelper=new DBHelper(ModifyBus.this);
                         int val= dbHelper.deleteRoute(txt_busid.getText().toString());
                         if (val == 1) {
-                            setStatusMsg = getString(R.string.msg_route_delete_succesfull);
+                            setStatusMsg = getString(R.string.msg_bus_delete_succesfull);
 
                         }
                         else {
-                            setStatusMsg = getString(R.string.msg_route_delete_unsuccesfull);
+                            setStatusMsg = getString(R.string.msg_bus_delete_unsuccesfull);
 
                         }
-                        Intent intent = new Intent(ModifyBus.this,Routes.class).putExtra("status", setStatusMsg);
+                        Intent intent = new Intent(ModifyBus.this,Buses.class).putExtra("status", setStatusMsg);
                         startActivity(intent);
                         Log.i("BTN Click", "Add route Confirmation button clicked");
 

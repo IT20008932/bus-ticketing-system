@@ -51,11 +51,30 @@ public class DBHelper extends SQLiteOpenHelper {
                         + BusMaster.BusesT.COLUMN_NAME_DESCRIPTION +
                         " TEXT" + ")";
 
+        String SQL_CREATE_SCHEDULES_TABLE =
+                "CREATE TABLE "
+                        + ScheduleMaster.SchedulesT.TABLE_NAME +
+                        " ("
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_SCHEDULE_ID +
+                        " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_ROUTE_ID +
+                        " TEXT, "
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_BUS_ID +
+                        " TEXT, "
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_START_TIME +
+                        " TEXT, "
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_END_TIME +
+                        " TEXT, "
+                        + ScheduleMaster.SchedulesT.COLUMN_NAME_STATUS +
+                        " TEXT" + ")";
+
         //defining the sql query
         db.execSQL(SQL_CREATE_ROUTES_TABLE);//Execute the route table creation
         Log.d("workflow", "Routes table created successfully");
         db.execSQL(SQL_CREATE_BUSES_TABLE);//Execute the bus table creation
         Log.d("workflow", "Buses table created successfully");
+        db.execSQL(SQL_CREATE_SCHEDULES_TABLE);//Execute the schedule table creation
+        Log.d("workflow", "Schedules table created successfully");
 
     }
 
@@ -65,6 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Log.d("workflow", "DB Onupgrade method Called");
         db.execSQL("DROP TABLE IF EXISTS " + RouteMaster.RoutesT.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + BusMaster.BusesT.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + ScheduleMaster.SchedulesT.TABLE_NAME);
 
         //  Create tables again
         onCreate(db);
@@ -305,4 +325,92 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // Schedule CRUD methods
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public long addSchedule(String routeId, String busId, String startTime, String endTime, String status) //enter all the parameter to be added to DB
+    {
+        Log.d("workflow", "DB addSchedules method Called");
+        SQLiteDatabase db = getWritableDatabase();// get the data repository in writable mode
+
+        ContentValues values = new ContentValues();  //create a new map of values , where column names the key
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_ROUTE_ID, routeId);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_BUS_ID, busId);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_START_TIME, startTime);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_END_TIME, endTime);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_STATUS, status);
+
+        long newRowID = db.insert(ScheduleMaster.SchedulesT.TABLE_NAME, null, values); //Insert a new row and returning the primary
+        //key values of the new row
+
+        Log.d("workflow", "DB addSchedules method call finished");
+
+        return newRowID;
+    }
+
+
+    public int deleteSchedule(String scheduleId) {
+        Log.d("workflow", "DB delete schedule method called");
+
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = ScheduleMaster.SchedulesT.COLUMN_NAME_SCHEDULE_ID + " = ? ";
+        String[] selectionArgs = {scheduleId};
+
+
+        int status = db.delete(ScheduleMaster.SchedulesT.TABLE_NAME,   //table name
+                selection,                         //where clause
+                selectionArgs                      //selection clause
+        );
+        return status;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int updateSchedule(String scheduleId, String routeId, String busId, String startTime, String endTime, String status) { //define the attributes and parameters to be sent
+
+        Log.d("workflow", "DB update schedule method called");
+        //  update route set is_default=0 where is_default=1
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_ROUTE_ID, routeId);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_BUS_ID, busId);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_START_TIME, startTime);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_END_TIME, endTime);
+        values.put(ScheduleMaster.SchedulesT.COLUMN_NAME_STATUS, status);
+
+        String selection = ScheduleMaster.SchedulesT.COLUMN_NAME_SCHEDULE_ID + " = ? ";
+        String[] selectionArgs = {scheduleId};
+
+        int count = db.update(ScheduleMaster.SchedulesT.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        return count;
+    }
+
+    public Cursor readAllSchedules() {
+        Log.d("workflow", "DB readAllSchedules method called");
+
+
+        String query = "SELECT " + ScheduleMaster.SchedulesT.COLUMN_NAME_SCHEDULE_ID + ", "
+                + ScheduleMaster.SchedulesT.COLUMN_NAME_ROUTE_ID + ", "
+                + ScheduleMaster.SchedulesT.COLUMN_NAME_BUS_ID + ", "
+                + ScheduleMaster.SchedulesT.COLUMN_NAME_START_TIME + ", "
+                + ScheduleMaster.SchedulesT.COLUMN_NAME_END_TIME + ","
+                + ScheduleMaster.SchedulesT.COLUMN_NAME_STATUS + " From "
+                + ScheduleMaster.SchedulesT.TABLE_NAME;
+
+        Log.d("workflow", query);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+
+        }
+        return cursor;
+    }
 }

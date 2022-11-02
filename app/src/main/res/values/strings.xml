@@ -129,4 +129,22 @@
     <string name="msg_bus_add_unsuccesfull">Bus addition unsuccessful.</string>
 	<string name="msg_bus_update_succesfull">Bus updated successfully.</string>
     <string name="msg_bus_update_unsuccesfull">Bus updation unsuccessful.</string>
+	<string name="msg_bus_delete_succesfull">Bus deleted successfully.</string>
+    <string name="msg_bus_delete_unsuccesfull">Bus deletion unsuccessful.</string>
+
+    <!-- Schedules -->
+	<string name="helptxt_route_id">Enter Route ID</string>
+    <string name="helptxt_bus_id">Enter Bus ID</string>
+	<string name="label_start_time">Start Time *</string>
+    <string name="label_end_time">End Time *</string>
+	<string name="label_status">Status *</string>
+    <string name="helptxt_start_time">Enter Schedule Start Time</string>
+    <string name="helptxt_end_time">Enter Schedule End Time</string>
+	<string name="helptxt_status">Enter Status</string>
+    <string name="msg_schedule_add_succesfull">Schedule added successfully.</string>
+    <string name="msg_schedule_add_unsuccesfull">Schedule addition unsuccessful.</string>
+	<string name="msg_schedule_update_succesfull">Schedule updated successfully.</string>
+    <string name="msg_schedule_update_unsuccesfull">Schedule updation unsuccessful.</string>
+	<string name="msg_schedule_delete_succesfull">Schedule deleted successfully.</string>
+    <string name="msg_schedule_delete_unsuccesfull">Schedule deletion unsuccessful.</string>
 </resources>

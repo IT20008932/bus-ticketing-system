@@ -44,7 +44,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_route_id_route_id"
+                android:id="@+id/txt_sid"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/design_default_color_secondary_variant"
                 app:hintTextColor="@color/design_default_color_secondary_variant"
@@ -53,7 +53,7 @@
                 android:hint="@string/label_route_id">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inp_rid1"
+                    android:id="@+id/inp_sid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoText="false"
@@ -75,7 +75,7 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_start_loc_modify_route"
+                android:id="@+id/txt_rid"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,10 +85,10 @@
                 app:endIconMode="clear_text"
                 app:helperTextEnabled="true"
                 app:hintTextColor="@color/design_default_color_secondary_variant"
-                android:hint="@string/label_start_location">
+                android:hint="@string/label_route_id">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inp_startlocup1"
+                    android:id="@+id/inp_rid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoText="false"
@@ -103,7 +103,64 @@
                 android:layout_weight="1" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txt_end__modify_route"
+                android:id="@+id/txt_bid"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/design_default_color_secondary_variant"
+                app:boxStrokeWidthFocused="1dp"
+                app:endIconMode="clear_text"
+                app:helperTextEnabled="true"
+                app:hintTextColor="@color/design_default_color_secondary_variant"
+                android:hint="@string/label_bus_id">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inp_bid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="false"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_start_time"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/design_default_color_secondary_variant"
+                app:boxStrokeWidthFocused="1dp"
+                app:endIconMode="clear_text"
+                app:helperTextEnabled="true"
+                app:hintTextColor="@color/design_default_color_secondary_variant"
+                android:hint="@string/label_start_location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inp_startTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="false"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_end_time"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -117,7 +174,36 @@
                 android:hint="@string/label_end_location">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inp_endlocup1"
+                    android:id="@+id/inp_endTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoText="false"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_status"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColorHint="@color/black"
+                app:boxStrokeColor="@color/design_default_color_secondary_variant"
+                app:boxStrokeWidthFocused="1dp"
+                app:endIconMode="clear_text"
+                app:helperTextEnabled="true"
+                app:hintTextColor="@color/design_default_color_secondary_variant"
+                android:hint="@string/label_status">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inp_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoText="false"

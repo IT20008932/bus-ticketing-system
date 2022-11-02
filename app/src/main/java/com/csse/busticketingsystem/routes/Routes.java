@@ -24,6 +24,7 @@ import com.csse.busticketingsystem.adapters.RouteAdapter;
 import com.csse.busticketingsystem.buses.Buses;
 import com.csse.busticketingsystem.database.DBHelper;
 
+import com.csse.busticketingsystem.schedules.Schedules;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -103,6 +104,11 @@ public class Routes extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.routes:
+                        return true;
+                    case R.id.schedules:
+                        startActivity(new Intent(getApplicationContext()
+                                , Schedules.class));
+                        overridePendingTransition(0,0);
                         return true;
                 }
                 Log.d("workflow","Routes bottom navigation method called");

@@ -1,4 +1,4 @@
-package com.csse.busticketingsystem.buses;
+package com.csse.busticketingsystem.schedules;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,11 +20,11 @@ import android.widget.TextView;
 
 import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
-import com.csse.busticketingsystem.adapters.BusAdapter;
+import com.csse.busticketingsystem.adapters.ScheduleAdapter;
+import com.csse.busticketingsystem.buses.Buses;
 import com.csse.busticketingsystem.database.DBHelper;
 
 import com.csse.busticketingsystem.routes.Routes;
-import com.csse.busticketingsystem.schedules.Schedules;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-public class Buses extends AppCompatActivity {
+public class Schedules extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton fab;
@@ -41,8 +41,8 @@ public class Buses extends AppCompatActivity {
     Bundle bundle;
 
     DBHelper db;
-    ArrayList<String> bus_id,bus_number,desc;
-    BusAdapter busAdapter;
+    ArrayList<String> sid,rid,bid,start_time,end_time,status;
+    ScheduleAdapter scheduleAdapter;
     MaterialToolbar materialToolbar;
 
 
@@ -51,48 +51,57 @@ public class Buses extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buses);
+        setContentView(R.layout.activity_schedules);
 
         try {
             bundle = getIntent().getExtras();
             String getstatus = bundle.getString("status");
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.busesLayout), getstatus, Snackbar.LENGTH_LONG);
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.routesLayout), getstatus, Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.btn_ok, v -> snackbar.dismiss());
             snackbar.show();
         } catch (Exception ignore) { }
 
-        Log.d("workflow","Buses on_create method Called");
+        Log.d("workflow","Schedule on_create method Called");
 
         recyclerView=findViewById(R.id.recyclerView3);
         empty_imageview=findViewById(R.id.empty_image);
         no_data = findViewById(R.id.no_data);
 
         db =new DBHelper(this);
-        bus_id = new ArrayList<>();
-
-        bus_id = new ArrayList<>();
-        desc = new ArrayList<>();
+        sid = new ArrayList<>();
+        rid = new ArrayList<>();
+        bid = new ArrayList<>();
+        start_time = new ArrayList<>();
+        end_time = new ArrayList<>();
+        status = new ArrayList<>();
 
         storeDataInArrays();
-        Log.d("workflow","Buses storeDataInArrays method called");
+        Log.d("workflow","Schedules storeDataInArrays method called");
 
-        busAdapter = new BusAdapter(this,this,bus_id, bus_number,
-                desc);
+        scheduleAdapter = new ScheduleAdapter(this,this,sid,
+                rid,
+                bid,
+                start_time,
+                end_time,
+                status);
 
-        recyclerView.setAdapter(busAdapter);
+        recyclerView.setAdapter(scheduleAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         materialToolbar = findViewById(R.id.topAppBar);
         //setSupportActionBar(materialToolbar);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.buses);
+        bottomNavigationView.setSelectedItemId(R.id.schedules);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.buses:
+                        startActivity(new Intent(getApplicationContext()
+                                , Buses.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext()
@@ -105,28 +114,25 @@ public class Buses extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.schedules:
-                        startActivity(new Intent(getApplicationContext()
-                                , Schedules.class));
-                        overridePendingTransition(0,0);
                         return true;
                 }
-                Log.d("workflow","Buses bottom navigation method Called");
+                Log.d("workflow","Routes bottom navigation method Called");
                 return false;
             }
         });
 
 
-        //start code for Add new bus button
+        //start code for Add new route button
         //pls replace below code after float button in UI
 
-        fab = findViewById(R.id.btn_add_bus);
+        fab = findViewById(R.id.btn_add_route);
 
         fab.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                openAddNewBus();
-                Log.d("workflow","Buses Float Button Clicked");
+                openAddNewRoute();
+                Log.d("workflow","Routes Float Button Clicked");
             }
         });
 
@@ -148,13 +154,13 @@ public class Buses extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode ==1){
             recreate();    //refresh if data not fetched
-            Log.d("workflow","Buses onActivityResult method Called");
+            Log.d("workflow","Routes onActivityResult method Called");
         }
     }
 
     private void storeDataInArrays() {
-        Log.d("workflow","Buses storeDataInArrays method Called");
-        Cursor cursor=db.readAllBuses();
+        Log.d("workflow","Routes storeDataInArrays method Called");
+        Cursor cursor=db.readAllRoutes();
         if(cursor.getCount()==0){
             empty_imageview.setVisibility(View.VISIBLE);
             no_data.setVisibility(View.VISIBLE);
@@ -163,9 +169,12 @@ public class Buses extends AppCompatActivity {
         {
             Resources resources=getResources();
             while(cursor.moveToNext()){
-                bus_id.add(cursor.getString(0));
-                desc.add(cursor.getString(2).substring(0, 1).toUpperCase() + cursor.getString(2).substring(1));
-                Log.d("workflow",cursor.getString(2));
+                sid.add(cursor.getString(0));
+                rid.add(cursor.getString(1));
+                bid.add(cursor.getString(2));
+                start_time.add(cursor.getString(3).substring(0, 1).toUpperCase() + cursor.getString(1).substring(1));
+                end_time.add(cursor.getString(4).substring(0, 1).toUpperCase() + cursor.getString(2).substring(1));
+                Log.d("workflow",cursor.getString(4));
             }
             empty_imageview.setVisibility(View.GONE);
             no_data.setVisibility(View.GONE);
@@ -173,24 +182,24 @@ public class Buses extends AppCompatActivity {
     }
 
 
-    //Add new bus
+    //Add new route
 
-    public void openAddNewBus() {
-        Log.d("workflow","Buses openAddNewBus method Called");
-        Intent intent = new Intent(this, AddBus.class);
+    public void openAddNewRoute() {
+        Log.d("workflow","Routes openAddNewRoute method Called");
+        Intent intent = new Intent(this, AddSchedule.class);
         startActivity(intent);
-        Log.i("Lifecycle", "Add bus button clicked");
+        Log.i("Lifecycle", "Add route button clicked");
     }
 
 
-    //View bus
+    //View route
 
-    public void openViewBus()
+    public void openViewRoute()
     {
-        Log.d("workflow","Buses openViewBus method Called");
-        Intent intent = new Intent(this,ModifyBus.class);
+        Log.d("workflow","Routes openViewRoute method Called");
+        Intent intent = new Intent(this,ModifySchedule.class);
         startActivity(intent);
-        Log.i("workflow","Add bus button clicked");
+        Log.i("workflow","Add route button clicked");
     }
 
 }

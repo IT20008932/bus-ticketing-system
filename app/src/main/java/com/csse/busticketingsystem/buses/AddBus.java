@@ -16,6 +16,7 @@ import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
 import com.csse.busticketingsystem.database.DBHelper;
 import com.csse.busticketingsystem.routes.Routes;
+import com.csse.busticketingsystem.schedules.Schedules;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -50,6 +51,11 @@ public class AddBus extends AppCompatActivity {
                     case R.id.routes:
                         startActivity(new Intent(getApplicationContext()
                                 , Routes.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.schedules:
+                        startActivity(new Intent(getApplicationContext()
+                                , Schedules.class));
                         overridePendingTransition(0,0);
                         return true;
                 }

@@ -1,4 +1,4 @@
-package com.csse.busticketingsystem.routes;
+package com.csse.busticketingsystem.schedules;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -13,22 +13,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.csse.busticketingsystem.MainActivity;
 import com.csse.busticketingsystem.R;
 import com.csse.busticketingsystem.buses.Buses;
 import com.csse.busticketingsystem.database.DBHelper;
-import com.csse.busticketingsystem.schedules.Schedules;
+import com.csse.busticketingsystem.routes.Routes;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class ModifyRoute extends AppCompatActivity {
-    TextInputEditText etrouteid,etstartloc,etendloc;
+public class ModifySchedule extends AppCompatActivity {
+    TextInputEditText txt_sid,txt_rid,txt_bid,txt_startTime,txt_endTime,txt_status;
 
-    String rid,startloc,endloc;
+    String sid,rid,bid,startTime,endTime,status;
     String setStatusMsg;
 
     boolean isfieldsvalidated=false;
@@ -36,16 +34,19 @@ public class ModifyRoute extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_route);
-        Log.d("workflow","Modify Route onCreate method  Called");
-        etrouteid=findViewById(R.id.inp_rid1);
-        etstartloc=findViewById(R.id.inp_startlocup1);
-        etendloc=findViewById(R.id.inp_endlocup1);
+        setContentView(R.layout.activity_modify_schedule);
+        Log.d("workflow","Modify Route onCreate method called");
+        txt_sid=findViewById(R.id.inp_sid);
+        txt_rid=findViewById(R.id.inp_rid);
+        txt_bid=findViewById(R.id.inp_bid);
+        txt_startTime=findViewById(R.id.inp_startTime);
+        txt_endTime=findViewById(R.id.inp_endTime);
+        txt_status=findViewById(R.id.inp_status);
 
         getAndSetIntentData();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.routes);
+        bottomNavigationView.setSelectedItemId(R.id.schedules);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -62,11 +63,11 @@ public class ModifyRoute extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.routes:
+                        startActivity(new Intent(getApplicationContext()
+                                , Routes.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.schedules:
-                        startActivity(new Intent(getApplicationContext()
-                                , Schedules.class));
-                        overridePendingTransition(0,0);
                         return true;
                 }
                 Log.d("workflow","Modify Route Bottom Nav method  Called");
@@ -81,24 +82,33 @@ public class ModifyRoute extends AppCompatActivity {
 
         Intent intent=new Intent();
 
-        Log.d("workflow","Modify Route getAndSetIntentData  method  Called");
+        Log.d("workflow","Modify Schedule getAndSetIntentData method called");
 
-        if(getIntent().hasExtra("rid") &&
-                getIntent().hasExtra("startloc") &&
-                getIntent().hasExtra("endloc"))
+        if(getIntent().hasExtra("sid") &&
+                getIntent().hasExtra("rid") &&
+                getIntent().hasExtra("bid") &&
+                getIntent().hasExtra("startTime") &&
+                getIntent().hasExtra("endTime") &&
+                getIntent().hasExtra("status"))
         {
 
 
+            sid = getIntent().getStringExtra("sid");
             rid = getIntent().getStringExtra("rid");
-            startloc = getIntent().getStringExtra("startloc");
-            endloc = getIntent().getStringExtra("endloc");
+            bid = getIntent().getStringExtra("bid");
+            startTime = getIntent().getStringExtra("startloc");
+            endTime = getIntent().getStringExtra("endloc");
+            status = getIntent().getStringExtra("status");
 
 
 
             //  Log.d("mvalies",rid);
-            etrouteid.setText(rid);
-            etstartloc.setText(startloc);
-            etendloc.setText(endloc);
+            txt_sid.setText(sid);
+            txt_rid.setText(rid);
+            txt_bid.setText(bid);
+            txt_startTime.setText(startTime);
+            txt_endTime.setText(endTime);
+            txt_status.setText(status);
         }
         else{
             Toast.makeText(this, "No data Available", Toast.LENGTH_SHORT).show();
@@ -106,31 +116,35 @@ public class ModifyRoute extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void updateRoute(View view) {
+    public void updateSchedule(View view) {
 
 
         isfieldsvalidated = CheckAllFields();
-        Log.d("workflow","Modify Route updateRoute  method  Called");
+        Log.d("workflow","updateSchedule method called");
         if (isfieldsvalidated) {
 
             DBHelper dbHelper = new DBHelper(this);
 
-            int val = dbHelper.updateRoute(etrouteid.getText().toString(), etstartloc.getText().toString(),
-                    etendloc.getText().toString());
+            int val = dbHelper.updateSchedule(txt_sid.getText().toString(),
+                    txt_rid.getText().toString(),
+                    txt_bid.getText().toString(),
+                    txt_startTime.getText().toString(),
+                    txt_endTime.getText().toString(),
+                    txt_status.getText().toString());
 
 
 
             if (val == -1) {
-                setStatusMsg = getString(R.string.msg_route_update_unsuccesfull);
+                setStatusMsg = getString(R.string.msg_schedule_update_unsuccesfull);
             }
             else {
-                setStatusMsg = getString(R.string.msg_route_update_succesfull);
+                setStatusMsg = getString(R.string.msg_schedule_update_succesfull);
             }
 
-            Intent intent = new Intent(this, Routes.class).putExtra("status", setStatusMsg);
+            Intent intent = new Intent(this, Schedules.class).putExtra("status", setStatusMsg);
             startActivity(intent);
 
-            Log.i("BTN Click", "Update route Confirmation button clicked");
+            Log.i("BTN Click", "Update schedule confirmation button clicked");
         }
     }
 
@@ -142,24 +156,58 @@ public class ModifyRoute extends AppCompatActivity {
         double maxdistance=999.99;
 
         Log.d("workflow","Add Route CheckAllFields  method  Called");
-        if (etstartloc.length() == 0) {
-            etstartloc.setError(getString(R.string.error_msg_mandatory));
+        if (txt_rid.length() == 0) {
+            txt_rid.setError(getString(R.string.error_msg_mandatory));
             return false;
         }
 
-        if (etendloc.length() == 0) {
-            etendloc.setError(getString(R.string.error_msg_mandatory));
+        if (txt_rid.length() == 0) {
+            txt_rid.setError(getString(R.string.error_msg_mandatory));
             return false;
         }
 
-        if (etstartloc.length() > maxchar) {
-
-            etstartloc.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+        if (txt_bid.length() > maxchar) {
+            txt_bid.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
             return false;
         }
 
-        if (etendloc.length() > maxchar) {
-            etendloc.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+        if (txt_bid.length() == 0) {
+            txt_bid.setError(getString(R.string.error_msg_mandatory));
+            return false;
+        }
+
+        if (txt_startTime.length() > maxchar) {
+            txt_startTime.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+            return false;
+        }
+
+        if (txt_startTime.length() == 0) {
+            txt_startTime.setError(getString(R.string.error_msg_mandatory));
+            return false;
+        }
+
+        if (txt_startTime.length() > maxchar) {
+            txt_startTime.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+            return false;
+        }
+
+        if (txt_endTime.length() == 0) {
+            txt_endTime.setError(getString(R.string.error_msg_mandatory));
+            return false;
+        }
+
+        if (txt_endTime.length() > maxchar) {
+            txt_endTime.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
+            return false;
+        }
+
+        if (txt_status.length() == 0) {
+            txt_status.setError(getString(R.string.error_msg_mandatory));
+            return false;
+        }
+
+        if (txt_status.length() > maxchar) {
+            txt_status.setError(getString(R.string.error_msg_max_characters)+" "+maxchar);
             return false;
         }
 
@@ -167,9 +215,9 @@ public class ModifyRoute extends AppCompatActivity {
 
     }
 
-    public void deleteRoute(View view){
+    public void deleteSchedule(View view){
         confirmDialog();
-        Log.d("workflow", "Modify Route deleteRoute  method  Called");
+        Log.d("workflow", "deleteSchedule method called");
     }
 
     private void errorDialog() {
@@ -205,19 +253,19 @@ public class ModifyRoute extends AppCompatActivity {
         builder.setPositiveButton(R.string.btn_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DBHelper dbHelper=new DBHelper(ModifyRoute.this);
-                        int val= dbHelper.deleteRoute(etrouteid.getText().toString());
+                        DBHelper dbHelper=new DBHelper(ModifySchedule.this);
+                        int val= dbHelper.deleteSchedule(txt_sid.getText().toString());
                         if (val == 1) {
-                            setStatusMsg = getString(R.string.msg_route_delete_succesfull);
+                            setStatusMsg = getString(R.string.msg_schedule_delete_succesfull);
 
                         }
                         else {
-                            setStatusMsg = getString(R.string.msg_route_delete_unsuccesfull);
+                            setStatusMsg = getString(R.string.msg_schedule_delete_unsuccesfull);
 
                         }
-                        Intent intent = new Intent(ModifyRoute.this,Routes.class).putExtra("status", setStatusMsg);
+                        Intent intent = new Intent(ModifySchedule.this,Schedules.class).putExtra("status", setStatusMsg);
                         startActivity(intent);
-                        Log.i("BTN Click", "Add route Confirmation button clicked");
+                        Log.i("BTN Click", "Update schedule confirmation button clicked");
 
 
                     }
