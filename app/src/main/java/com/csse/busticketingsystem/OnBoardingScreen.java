@@ -90,7 +90,7 @@ public class OnBoardingScreen extends AppCompatActivity {
             } else if (position == 1){
                 letsGetStarted.setVisibility(View.INVISIBLE);
             } else {
-                animation = AnimationUtils.loadAnimation(OnBoardingScreen.this,R.anim.bottom_anim);
+                animation = AnimationUtils.loadAnimation(OnBoardingScreen.this,R.anim.side_anim);
                 letsGetStarted.setAnimation(animation);
                 letsGetStarted.setVisibility(View.VISIBLE);
             }

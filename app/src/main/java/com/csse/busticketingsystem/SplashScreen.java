@@ -3,19 +3,27 @@ package com.csse.busticketingsystem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import android.util.Pair;
+
 public class SplashScreen extends AppCompatActivity {
 
-    ImageView appName;
-    LottieAnimationView lottieAnimationView;
+    private static int DELAY_TIME = 4000;
+
+    Animation topAnim, bottomAnim;
+    ImageView appName, logoImage;
+
     SharedPreferences onBoardingScreen;
 
     @SuppressLint("MissingInflatedId")
@@ -23,14 +31,16 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        appName = findViewById(R.id.app_name);
-        lottieAnimationView = findViewById(R.id.lottie);
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_anim);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
 
-        appName.animate().translationY(2000).setDuration(1000).setStartDelay(5000);
-        lottieAnimationView.animate().translationY(1500).setDuration(1000).setStartDelay(5000);
+        appName = findViewById(R.id.app_name);
+        logoImage = findViewById(R.id.app_logo);
+
+        appName.setAnimation(topAnim);
+        logoImage.setAnimation(bottomAnim);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -46,10 +56,18 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(new Intent(SplashScreen.this,OnBoardingScreen.class));
                 }
                 else {
-                    startActivity(new Intent(SplashScreen.this,LoginScreen.class));
+                    Intent intent = new Intent(SplashScreen.this,LoginScreen.class);
+
+                    Pair[] pairs = new Pair[2];
+                    pairs[0] = new Pair(appName,"splash_text");
+                    pairs[1] = new Pair(logoImage,"splash_image");
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(SplashScreen.this,pairs);
+                    startActivity(intent,options.toBundle());
+                    finish();
                 }
 
             }
-        },6000);
+        },DELAY_TIME);
     }
 }
