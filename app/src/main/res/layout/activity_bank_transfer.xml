@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BankTransfer">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF009688"
+        app:title="Bank Transfer"
+        app:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="MissingConstraints">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+
+        android:id="@+id/bank_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/holder"
+        android:textColor="#0B0A0A"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_topText" />
+
+    <EditText
+        android:id="@+id/b_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColor="#0B0B0B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_topText"
+        tools:ignore="SpeakableTextPresentCheck,DuplicateClickableBoundsCheck" />
+
+    <TextView
+        android:id="@+id/b_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/holder"
+        android:textColor="#0B0A0A"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_topText" />
+
+
+    <EditText
+        android:id="@+id/bnk_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColor="#0B0B0B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_topText"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/bank_accNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/accNo"
+        android:textColor="#101010"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_nme" />
+
+    <ImageView
+        android:id="@+id/bank_img1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
+        app:srcCompat="@drawable/money_protectionnew" />
+
+    <TextView
+        android:id="@+id/bank_topText"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="52dp"
+        android:text="@string/topView"
+        android:textColor="#434445"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/bank_routing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/routing"
+        android:textColor="#0B0B0B"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_accNo" />
+
+    <TextView
+        android:id="@+id/bank_bottonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/bottom_text"
+        android:textColor="#3C3C3E"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routNo" />
+
+    <ImageView
+        android:id="@+id/bank_img2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_baseline_lock_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_routing" />
+
+    <ImageView
+        android:id="@+id/bank_img3"
+        android:layout_width="400dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_bottonText"
+        app:srcCompat="@drawable/my_check" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="46dp"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bank_img3" />
+
+    <ImageView
+        android:id="@+id/painter_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginRight="164dp"
+        android:src="@drawable/ic_baseline_arrow_downward_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bank_img3" />
+
+    <TextView
+        android:id="@+id/rout_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/routNo"
+        android:textColor="#090909"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+    <EditText
+        android:id="@+id/accNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/b_name"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/routNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accNo"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/acc_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="148dp"
+        android:text="@string/accountNo"
+        android:textColor="#0E0E0E"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/painter_img" />
+
+    <TextView
+        android:id="@+id/bank_nme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="44dp"
+        android:text="Bank Name"
+        android:textColor="#070707"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bank_holder" />
+
+    <Button
+        android:id="@+id/bank_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Save"
+        android:textColor="#218c79"
+        android:textSize="12sp"
+        app:backgroundTint="@null"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
