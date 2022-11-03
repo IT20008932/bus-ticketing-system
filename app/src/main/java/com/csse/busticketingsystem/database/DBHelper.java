@@ -1,205 +1,382 @@
-package com.csse.busticketingsystem.database;
+package com.example.myapplication22.Database;
 
+
+//import static com.example.work_byte.Database.UserDetails.User.TABLE_NAME;
+//import static com.example.work_byte.Database.UserDetails.User.category;
+//import static com.example.work_byte.Database.UserDetails.User.email;
+//import static com.example.work_byte.Database.UserDetails.User.experience;
+//import static com.example.work_byte.Database.UserDetails.User.first_name;
+//import static com.example.work_byte.Database.UserDetails.User.last_name;
+//import static com.example.work_byte.Database.UserDetails.User.mobile;
+//import static com.example.work_byte.Database.UserDetails.User.workArea;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.util.Log;
+import android.provider.BaseColumns;
 
-import androidx.annotation.RequiresApi;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "UserInfo.db";
-
     public DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, "work_byte.db", null, 1);
     }
-    //change the DB version when upgrading the DB
-
 
     @Override
-    public void onCreate(SQLiteDatabase db) {        //creating the table
-        Log.d("workflow", "DB onCreate method Called");
-        String SQL_CREATE_ROUTES_TABLE =
-                "CREATE TABLE "
-                        + RouteMaster.RoutesT.TABLE_NAME +
-                        " ("
-                        + RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID +
-                        " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                        + RouteMaster.RoutesT.COLUMN_NAME_START_LOCATION +
-                        " TEXT, "
-                        + RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION +
-                        " TEXT" + ")";
-
-
-        //defining the sql query
-        db.execSQL(SQL_CREATE_ROUTES_TABLE);//Execute the table creation
-        Log.d("workflow", "Routes table created successfully");
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SQL_CREATE_ENTRIES);
 
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d("workflow", "DB Onupgrade method Called");
-        db.execSQL("DROP TABLE IF EXISTS " + RouteMaster.RoutesT.TABLE_NAME);
-
-        //  Create tables again
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
+
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public String getTimeStamp() {
-        Log.d("workflow", "DB gettimestamop method Called");
-
-        LocalDateTime myDateobj = LocalDateTime.now();
-        DateTimeFormatter myformatobj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
-        String timeStamp = myDateobj.format(myformatobj);
-        return timeStamp;
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public long addRoutes(String startloc, String endloc) //enter all the parameter to be added to DB
-    {
-        Log.d("workflow", "DB addRoutes method Called");
+    private static final String SQL_CREATE_ENTRIES =
 
-        String timeadd = getTimeStamp();
-        Log.d("workflow", "DB gettimpstamp method Called");
-
-        SQLiteDatabase db = getWritableDatabase();// get the data repository in writable mode
-
-        ContentValues values = new ContentValues();  //create a new map of values , where column names the key
-        values.put(RouteMaster.RoutesT.COLUMN_NAME_START_LOCATION, startloc);
-        values.put(RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION, endloc);
-
-        long newRowID = db.insert(RouteMaster.RoutesT.TABLE_NAME, null, values); //Insert a new row and returning the primary
-        //key values of the new row
-
-        Log.d("workflow", "DB addRoutes method Called finished");
-
-        return newRowID;
-    }
-
-    public List<String> getstartStoplocation() {
-        List<String> list = new ArrayList<String>();
-
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + RouteMaster.RoutesT.TABLE_NAME
-                + " ORDER BY " +
-                RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(cursor.getString(1).substring(0, 1).toUpperCase() + cursor.getString(1).substring(1)
-                        + " - " +
-                        cursor.getString(2).substring(0, 1).toUpperCase() + cursor.getString(2).substring(1));//adding 2nd column data
-                Log.d("workflow", cursor.getString(1));
-            } while (cursor.moveToNext());
-        }
-
-        // closing connection
-        cursor.close();
-        db.close();
-        // returning lables
-        return list;
-    }
-
-    public List<String> getroutelist() {
-        List<String> list = new ArrayList<String>();
-
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + RouteMaster.RoutesT.TABLE_NAME
-                + " ORDER BY " +
-                RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);//selectQuery,selectedArguments
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(cursor.getString(0));
-            } while (cursor.moveToNext());
-        }
-        // closing connection
-        cursor.close();
-        db.close();
-        // returning lables
-        return list;
-    }
+            "CREATE TABLE " + UserDetails.User.TABLE_NAME + "("
+                    +UserDetails.User.worker_id + " INTEGER PRIMARY KEY "+" AUTOINCREMENT,"
+                    + UserDetails.User.first_name + " NOT NULL," + UserDetails.User.last_name + "  NOT NULL,"
+                    + UserDetails.User.email + "  NOT NULL ," + UserDetails.User.mobile + "  NOT NULL,"
+                    + UserDetails.User.workArea + " NOT NULL," + UserDetails.User.password + " NOT NULL,"
+                    + UserDetails.User.re_password + " NOT NULL,"  + UserDetails.User.address + " NOT NULL,"
+                    + UserDetails.User.category + " NOT NULL," + UserDetails.User.experience + " NOT NULL,"
+                    + UserDetails.User.salary + " NOT NULL,"
+                    + UserDetails.User.pro_image  +")";
+                    //+ UserDetails.User.pro_image + " NOT NULL" +")";
 
 
-    public int deleteRoute(String routeid) {
-        Log.d("workflow", "DB delete route method Called");
-
-        SQLiteDatabase db = getReadableDatabase();
-        String selection = RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID + " = ? ";
-        String[] selectionArgs = {routeid};
+    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + UserDetails.User.TABLE_NAME;
 
 
-        int status = db.delete(RouteMaster.RoutesT.TABLE_NAME,   //table name
-                selection,                         //where clause
-                selectionArgs                      //selection clause
-        );
-        return status;
-    }
 
+    public boolean insertData(String f_name, String l_name, String email, String m_number, String work_area, String password, String re_password, String address, String experience,String salary, String category) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int updateRoute(String routeid, String startloc, String endloc) { //define the attributes and parameters to be sent
-
-        Log.d("workflow", "DB update route method Called");
-        //  update route set is_default=0 where is_default=1
-        SQLiteDatabase db = getReadableDatabase();
+// Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
+        values.put(UserDetails.User.first_name, f_name);
+        values.put(UserDetails.User.last_name, l_name);
+        values.put(UserDetails.User.email, email);
+        values.put(UserDetails.User.mobile, m_number);
+        values.put(UserDetails.User.workArea, work_area);
+        values.put(UserDetails.User.password, password);
+        values.put(UserDetails.User.re_password, re_password);
+        values.put(UserDetails.User.address, address);
+        values.put(UserDetails.User.experience, experience);
+        values.put(UserDetails.User.salary, salary);
+        values.put(UserDetails.User.category, category);
 
-        values.put(RouteMaster.RoutesT.COLUMN_NAME_START_LOCATION, startloc);
-        values.put(RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION, endloc);
 
-        String selection = RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID + " = ? ";
-        String[] selectionArgs = {routeid};
 
-        int count = db.update(RouteMaster.RoutesT.TABLE_NAME,
+
+// Insert the new row, returning the primary key value of the new row
+        long result = db.insert(UserDetails.User.TABLE_NAME, String.valueOf(values), values);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+    public List readAllInfo(){
+        SQLiteDatabase db = getReadableDatabase();
+
+
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                BaseColumns._ID,
+                UserDetails.User.first_name,
+                UserDetails.User.last_name,
+                UserDetails.User.email,
+                UserDetails.User.mobile,
+                UserDetails.User.workArea,
+                UserDetails.User.address,
+                UserDetails.User.experience
+        };
+
+// Filter results WHERE "title" = 'My Title'
+        String selection = UserDetails.User.email + " LIKE ?";
+//        String[] selectionArgs = { email };
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder = UserDetails.User.email + " DESC";
+
+        Cursor cursor = db.query(
+                UserDetails.User.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                null,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        List useremails = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            String user = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.email));
+            useremails.add(user);
+
+        }
+        cursor.close();
+        return useremails;
+    }
+
+    public List readAllInfo (String email){
+        SQLiteDatabase db = getReadableDatabase();
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                UserDetails.User.first_name,
+                UserDetails.User.last_name,
+                UserDetails.User.email,
+                UserDetails.User.mobile,
+                UserDetails.User.workArea,
+                UserDetails.User.address,
+                UserDetails.User.experience
+        };
+
+// Filter results WHERE "title" = 'My Title'
+        String selection = UserDetails.User.email + " =?";
+        String[] selectionArgs = { email };
+
+// How you want the results sorted in the resulting Cursor
+        String sortOrder = UserDetails.User.email + " DESC";
+
+        Cursor cursor = db.query(
+                UserDetails.User.TABLE_NAME,   // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                selectionArgs,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                sortOrder               // The sort order
+        );
+
+        List userInfo = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            String Emailv = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.email));
+            String workAreav = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.workArea));
+            String Experiencev = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.experience));
+            String telev = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.mobile));
+            String addressv = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.address));
+            String pwordv = cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.password));
+            String repwordv= cursor.getString(cursor.getColumnIndexOrThrow(UserDetails.User.re_password));
+            userInfo.add(Emailv); //0
+            userInfo.add(workAreav);//1
+            userInfo.add(Experiencev);//2
+            userInfo.add(telev);//3
+            userInfo.add(addressv);//4
+            userInfo.add(pwordv);//5
+            userInfo.add(repwordv);//6
+
+        }
+        cursor.close();
+        return userInfo;
+    }
+
+    public Boolean updateInfo (String email, String work_area, String m_number, String password, String re_password, String address, String experience){
+        SQLiteDatabase db = getWritableDatabase();
+
+// New value for one column
+        ContentValues values = new ContentValues();
+        values.put(UserDetails.User.workArea, work_area);
+        values.put(UserDetails.User.mobile, m_number);
+        values.put(UserDetails.User.password, password);
+        values.put(UserDetails.User.re_password, re_password);
+        values.put(UserDetails.User.address, address);
+        values.put(UserDetails.User.experience, experience);
+
+
+// Which row to update, based on the title
+        String selection = UserDetails.User.email + " LIKE ?";
+        String[] selectionArgs = { email };
+
+        int count = db.update(
+                UserDetails.User.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
-        return count;
+
+        if (count > 0 )
+            return true;
+        else
+            return false;
     }
 
-    public Cursor readAllRoutes() {
-        Log.d("workflow", "DB read All Routes method Called");
-
-
-        String query = "SELECT " + RouteMaster.RoutesT.COLUMN_NAME_ROUTE_ID + ", "
-                + RouteMaster.RoutesT.COLUMN_NAME_START_LOCATION + ", "
-                + RouteMaster.RoutesT.COLUMN_NAME_END_LOCATION + " From "
-                + RouteMaster.RoutesT.TABLE_NAME;
-
-        Log.d("workflow", query);
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-
-        }
-        return cursor;
+    public boolean checkUseremail (String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from users where email = ?", new String[] {email});
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
     }
 
+
+    public boolean checkEmailPassword(String email, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("Select * from users where email = ? and password =?", new String[] {email, password});
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return  false;
+    }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //get all workers as list when click category
+    public List<UserDetails> getAllWorkers(String category){
+    List<UserDetails> workers=new ArrayList<>();
+    SQLiteDatabase db=getReadableDatabase();
+    //String query=" SELECT * FROM "+UserDetails.User.TABLE_NAME;
+    //Cursor cursor=db.rawQuery(query,null);
+    Cursor cursor=db.query(UserDetails.User.TABLE_NAME,new String[]{UserDetails.User.worker_id,UserDetails.User.first_name,
+            UserDetails.User.last_name,UserDetails.User.email,UserDetails.User.mobile,
+            UserDetails.User.workArea,UserDetails.User.password,UserDetails.User.re_password,UserDetails.User.address,
+            UserDetails.User.experience,UserDetails.User.salary,UserDetails.User.category},UserDetails.User.category+ "=?",new String[]{category},null,null,null);
+
+    //check whether the table has data.go to first raw.if empty return false
+    if(cursor.moveToFirst()) {
+        do {
+            //create empty workerModel object
+            UserDetails workerModel=new UserDetails();
+
+            //set values
+            workerModel.setUserId(cursor.getInt(0));
+            workerModel.setFirst_name(cursor.getString(1));
+            workerModel.setLast_name(cursor.getString(2));
+            workerModel.setEmail(cursor.getString(3));
+            workerModel.setMobile(cursor.getString(4));
+            workerModel.setWorkArea(cursor.getString(5));
+            workerModel.setPassword(cursor.getString(6));
+            workerModel.setRepassword(cursor.getString(7));
+            workerModel.setAddress(cursor.getString(8));
+            workerModel.setExperience(cursor.getString(9));
+            workerModel.setSalary(cursor.getInt(10));
+            workerModel.setCategory(cursor.getString(11));
+
+
+            //add todoModel to the list type object
+            workers.add(workerModel);
+
+        }while(cursor.moveToNext());
+    }
+    return workers;
 }
+
+
+    public List<UserDetails> getAllWorkers(){
+        List<UserDetails> workers=new ArrayList<>();
+        SQLiteDatabase db=getReadableDatabase();
+        String query=" SELECT * FROM "+UserDetails.User.TABLE_NAME;
+        Cursor cursor=db.rawQuery(query,null);
+        //Cursor cursor=db.query(UserDetails.User.TABLE_NAME,new String[]{UserDetails.User.worker_id,UserDetails.User.first_name,
+                //UserDetails.User.last_name,UserDetails.User.email,UserDetails.User.mobile,
+                //UserDetails.User.workArea,UserDetails.User.password,UserDetails.User.re_password,UserDetails.User.address,
+                //UserDetails.User.experience,UserDetails.User.category},UserDetails.User.category+ "=?",new String[]{category},null,null,null);
+
+        //check whether the table has data.go to first raw.if empty return false
+        if(cursor.moveToFirst()) {
+            do {
+                //create empty workerModel object
+                UserDetails workerModel=new UserDetails();
+
+                //set values
+                workerModel.setUserId(cursor.getInt(0));
+                workerModel.setFirst_name(cursor.getString(1));
+                workerModel.setLast_name(cursor.getString(2));
+                workerModel.setEmail(cursor.getString(3));
+                workerModel.setMobile(cursor.getString(4));
+                workerModel.setWorkArea(cursor.getString(5));
+                workerModel.setPassword(cursor.getString(6));
+                workerModel.setRepassword(cursor.getString(7));
+                workerModel.setAddress(cursor.getString(8));
+                workerModel.setExperience(cursor.getString(9));
+                workerModel.setCategory(cursor.getString(10));
+                workerModel.setSalary(cursor.getInt(11));
+
+
+                //add todoModel to the list type object
+                workers.add(workerModel);
+
+            }while(cursor.moveToNext());
+        }
+        return workers;
+    }
+    //get single Worker
+    public UserDetails getSingleWorkerbyEmail(String email){
+        SQLiteDatabase db=getWritableDatabase();
+        Cursor cursor=  db.query(UserDetails.User.TABLE_NAME,new String[]{UserDetails.User.worker_id,UserDetails.User.first_name,
+                UserDetails.User.last_name,UserDetails.User.email,UserDetails.User.mobile,
+                UserDetails.User.workArea,UserDetails.User.password,UserDetails.User.re_password,UserDetails.User.address,
+                UserDetails.User.category,UserDetails.User.experience,UserDetails.User.salary},UserDetails.User.email+"=?",new String[]{email},null,null,null);
+
+        UserDetails workerModel;
+        if(cursor != null) {
+            cursor.moveToFirst();
+            workerModel = new UserDetails(cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getString(5),
+                    cursor.getString(6),
+                    cursor.getString(7),
+                    cursor.getString(8),
+                    cursor.getString(9),
+                    cursor.getString(10),
+                    cursor.getInt(11));
+
+            return workerModel;
+        }
+        return  null;
+    }
+
+//    public UserDetails getSingleWorkerbyId(int id){
+//        SQLiteDatabase db=getWritableDatabase();
+//        Cursor cursor=  db.query(UserDetails.User.TABLE_NAME,new String[]{UserDetails.User.worker_id,UserDetails.User.first_name,
+//                UserDetails.User.last_name,UserDetails.User.email,UserDetails.User.mobile,
+//                UserDetails.User.workArea,UserDetails.User.password,UserDetails.User.re_password,UserDetails.User.address,
+//                UserDetails.User.experience,UserDetails.User.salary,UserDetails.User.category},UserDetails.User.worker_id+"=?",new String[]{String.valueOf(id)},null,null,null);
+//
+//        UserDetails workerModel;
+//        if(cursor != null) {
+//            cursor.moveToFirst();
+//            workerModel = new UserDetails(cursor.getInt(0),
+//                    cursor.getString(1),
+//                    cursor.getString(2),
+//                    cursor.getString(3),
+//                    cursor.getString(4),
+//                    cursor.getString(5),
+//                    cursor.getString(6),
+//                    cursor.getString(7),
+//                    cursor.getString(8),
+//                    cursor.getString(9),
+//                    cursor.getInt(10),
+//                    cursor.getString(11));
+//
+//            return workerModel;
+//        }
+//        return  null;
+    }
+
+
+
