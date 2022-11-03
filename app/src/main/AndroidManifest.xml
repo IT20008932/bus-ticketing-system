@@ -99,6 +99,10 @@
             android:name=".buses.ModifyBus"
             android:exported="true" />
         
+        <activity android:name=".HireDetail" android:exported="true"/>
+<activity android:name=".BankTransfer" android:exported="true"/>
+<activity android:name=".Payment" android:exported="true">
+        
     </application>
 
 
