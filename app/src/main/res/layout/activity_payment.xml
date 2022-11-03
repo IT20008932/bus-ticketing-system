@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Payment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF009688"
+        app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+        app:title="Payment"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!--    <Button-->
+    <!--        android:id="@+id/payment_btn1"-->
+    <!--        android:layout_width="128dp"-->
+    <!--        android:layout_height="68dp"-->
+    <!--        android:layout_marginStart="256dp"-->
+    <!--        android:layout_marginTop="72dp"-->
+    <!--        android:layout_marginEnd="32dp"-->
+    <!--        android:backgroundTint="#009688"-->
+    <!--        android:text="Pay with credit or debit"-->
+    <!--        app:layout_constraintEnd_toEndOf="@+id/include"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/paymentMethod_payMethods" />-->
+
+
+    <TextView
+        android:id="@+id/paymentMethod_payMethods"
+        android:layout_width="400dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="540dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/payMethods"
+        android:textColor="#100F0F"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/payment_btn1"
+        android:layout_width="170dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Pay with credit or debit"
+        android:textColor="#218c79"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/pay_img1"
+        app:layout_constraintTop_toBottomOf="@+id/paymentMethod_payMethods" />
+
+    <ImageView
+        android:id="@+id/pay_img2"
+        android:layout_width="188dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pay_img1"
+        app:srcCompat="@drawable/pay_method2new" />
+
+    <Button
+        android:id="@+id/payment_btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Bank Transfer"
+        android:textColor="#218c79"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/pay_img2"
+        app:layout_constraintTop_toBottomOf="@+id/payment_btn1" />
+
+    <ImageView
+        android:id="@+id/pay_img1"
+        android:layout_width="191dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentMethod_payMethods"
+        app:srcCompat="@drawable/pay_method1" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/payment_btn2"-->
+    <!--        android:layout_width="159dp"-->
+    <!--        android:layout_height="52dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_marginStart="34dp"-->
+    <!--        android:layout_marginEnd="15dp"-->
+    <!--        android:background="@drawable/buttonshape"-->
+    <!--        android:shadowColor="#A8A8A8"-->
+    <!--        android:shadowDx="0"-->
+    <!--        android:shadowDy="0"-->
+    <!--        android:shadowRadius="5"-->
+    <!--        android:text="Bank Transfer"-->
+    <!--        android:textColor="#218c79"-->
+    <!--        android:textSize="12sp"-->
+    <!--        app:backgroundTint="@null"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/pay_img2"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        tools:layout_editor_absoluteY="511dp">-->
+
+    <!--    </Button>-->
+
+    <!--        <Button-->
+    <!--        android:id="@+id/payment_btn1"-->
+    <!--        android:layout_width="160dp"-->
+    <!--        android:layout_height="54dp"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_marginStart="28dp"-->
+    <!--        android:background="@drawable/buttonshape"-->
+    <!--        android:shadowColor="#A8A8A8"-->
+    <!--        android:shadowDx="0"-->
+    <!--        android:shadowDy="0"-->
+    <!--        android:shadowRadius="5"-->
+    <!--        android:text="Pay with credit or debit"-->
+    <!--        android:textColor="#218c79"-->
+    <!--        android:textSize="12sp"-->
+    <!--        app:backgroundTint="@null"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/pay_img1"-->
+    <!--        tools:ignore="MissingConstraints"-->
+    <!--        tools:layout_editor_absoluteY="402dp">-->
+
+    <!--    </Button>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/payment_btn2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="48dp"-->
+    <!--        android:layout_marginEnd="104dp"-->
+    <!--        android:backgroundTint="#009688"-->
+    <!--        android:text="Bank Transfer"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/payment_btn1" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/button"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Button"-->
+    <!--        tools:layout_editor_absoluteX="273dp"-->
+    <!--        tools:layout_editor_absoluteY="393dp" />-->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
