@@ -147,4 +147,31 @@
     <string name="msg_schedule_update_unsuccesfull">Schedule updation unsuccessful.</string>
 	<string name="msg_schedule_delete_succesfull">Schedule deleted successfully.</string>
     <string name="msg_schedule_delete_unsuccesfull">Schedule deletion unsuccessful.</string>
+	
+	
+	<!-- Payment -->
+	
+<string name="total">Total</string>
+<string name="advance">Advance</string>
+<string name="payMethods">Select Payment Methods</string>
+<string name="topText">You should pay 10% as a advance payment to confirm the hire</string>
+<string name="holder">Account Holder</string>
+<string name="accNo">Account No</string>
+<string name="topView">Payment Protection: Only pay for work you authorize</string>
+<string name="routing">Routing No</string>
+<string name="bottom_text">Your payment information is stored securley</string>
+<string name="routNo">routing no</string>
+<string name="accountNo">account no</string>
+<string name="bal">Balance :</string>
+<string name="s_date">Work Starting Date :</string>
+<string name="totall">Total :</string>
+<string name="adv">Advance :</string>
+<string name="dur">Completion Duration</string>
+<string name="topTxt">Thank you for using App</string>
+<string name="cus">Customer Name:</string>
+<string name="wor">Worker :</string>
+<string name="Date_new">Date :</string>
+<string name="hire">Hire Detail</string>
+<string name="wlocation">Work Location :</string>
+<string name="Date">Date</string>
 </resources>
